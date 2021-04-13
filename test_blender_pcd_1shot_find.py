@@ -273,12 +273,12 @@ if __name__ == '__main__':
             depth = read_exr(exr_path_1, height, width)
             
             pose = np.loadtxt(pose_path)
-            points = depth2pcd(depth, intrinsics, pose)
-            if (points.shape[0] == 0):
-                points = np.array([(1.0,1.0,1.0)])
-            pcd = open3d.geometry.PointCloud()
-            pcd.points = open3d.utility.Vector3dVector(points)
-            open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"actual"+".pcd"), pcd)
+            points1 = depth2pcd(depth, intrinsics, pose)
+            if (points1.shape[0] == 0):
+                points1 = np.array([(1.0,1.0,1.0)])
+            pcd1 = open3d.geometry.PointCloud()
+            pcd1.points = open3d.utility.Vector3dVector(points1)
+            open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"actual"+".pcd"), pcd1)
         
             
 
@@ -310,45 +310,50 @@ if __name__ == '__main__':
             depth = read_exr(exr_path_1, height, width)
                 
             pose = np.loadtxt(pose_path)
-            points = depth2pcd(depth, intrinsics, pose)
-            if (points.shape[0] == 0):
-                points = np.array([(1.0,1.0,1.0)])
-            pcd = open3d.geometry.PointCloud()
-            pcd.points = open3d.utility.Vector3dVector(points)
-            open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"predicted"+".pcd"), pcd)
+            points2 = depth2pcd(depth, intrinsics, pose)
+            if (points2.shape[0] == 0):
+                points2 = np.array([(1.0,1.0,1.0)])
+            pcd2 = open3d.geometry.PointCloud()
+            pcd2.points = open3d.utility.Vector3dVector(points2)
+            open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"predicted"+".pcd"), pcd2)
+
+            pcd_combined_predict=open3d.geometry.PointCloud()
+            points_predict_combined=np.concatenate((points1,points2),axis=0)
+            pcd_combined_predict.points=open3d.utility.Vector3dVector(points_predict_combined)
+            open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"combined_predict"+".pcd"), pcd_combined_predict)
 
 
-            pozitie_greedy=int(test_viewstate[i][2])    
-            cam_pose = mathutils.Vector((viewspace[pozitie_greedy][0], viewspace[pozitie_greedy][1], viewspace[pozitie_greedy][2])) 
-            center_pose = mathutils.Vector((0, 0, 0))
-            direct = center_pose - cam_pose
-            rot_quat = direct.to_track_quat('-Z', 'Y')
-            camera.rotation_euler = rot_quat.to_euler()
-            camera.location = cam_pose
-            pose_matrix = camera.matrix_world
-            output.file_slots[0].path = os.path.join(exr_dir, str(i)+"_"+"greedy"+".exr")
-            bpy.ops.render.render(write_still=True)
-            np.savetxt(os.path.join(pose_dir, str(i)+"_"+"greedy"+".txt"), pose_matrix, '%f') 
-            pose_path=os.path.join(pose_dir, str(i)+"_"+"greedy"+".txt")
+            # pozitie_greedy=int(test_viewstate[i][2])    
+            # cam_pose = mathutils.Vector((viewspace[pozitie_greedy][0], viewspace[pozitie_greedy][1], viewspace[pozitie_greedy][2])) 
+            # center_pose = mathutils.Vector((0, 0, 0))
+            # direct = center_pose - cam_pose
+            # rot_quat = direct.to_track_quat('-Z', 'Y')
+            # camera.rotation_euler = rot_quat.to_euler()
+            # camera.location = cam_pose
+            # pose_matrix = camera.matrix_world
+            # output.file_slots[0].path = os.path.join(exr_dir, str(i)+"_"+"greedy"+".exr")
+            # bpy.ops.render.render(write_still=True)
+            # np.savetxt(os.path.join(pose_dir, str(i)+"_"+"greedy"+".txt"), pose_matrix, '%f') 
+            # pose_path=os.path.join(pose_dir, str(i)+"_"+"greedy"+".txt")
                 
-            exr_path_1 = os.path.join(exr_dir, str(i)+"_"+"greedy"+".exr")
-            exr_path_2 = os.path.join(exr_dir, str(i)+"_"+"greedy"+".exr0001"+".exr")
+            # exr_path_1 = os.path.join(exr_dir, str(i)+"_"+"greedy"+".exr")
+            # exr_path_2 = os.path.join(exr_dir, str(i)+"_"+"greedy"+".exr0001"+".exr")
 
-            os.rename(exr_path_2, exr_path_1)
+            # os.rename(exr_path_2, exr_path_1)
             
 
 
-            pose_path = os.path.join(pose_dir, str(i)+"_"+"greedy"+".txt")  
+            # pose_path = os.path.join(pose_dir, str(i)+"_"+"greedy"+".txt")  
 
-            depth = read_exr(exr_path_1, height, width)
+            # depth = read_exr(exr_path_1, height, width)
                 
-            pose = np.loadtxt(pose_path)
-            points = depth2pcd(depth, intrinsics, pose)
-            if (points.shape[0] == 0):
-                points = np.array([(1.0,1.0,1.0)])
-            pcd = open3d.geometry.PointCloud()
-            pcd.points = open3d.utility.Vector3dVector(points)
-            open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"greedy"+".pcd"), pcd)
+            # pose = np.loadtxt(pose_path)
+            # points = depth2pcd(depth, intrinsics, pose)
+            # if (points.shape[0] == 0):
+            #     points = np.array([(1.0,1.0,1.0)])
+            # pcd = open3d.geometry.PointCloud()
+            # pcd.points = open3d.utility.Vector3dVector(points)
+            # open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"greedy"+".pcd"), pcd)
 
             
 
@@ -361,11 +366,11 @@ if __name__ == '__main__':
             past_model=working_model
         
 
-    nr_poz=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt', 'w+')
-    i=i+1
-    print("New position:"+str(i))
-    nr_poz.write(str(i))
-    nr_poz.close()
+        nr_poz=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt', 'w+')
+        i=i+1
+        print("New position:"+str(i))
+        nr_poz.write(str(i))
+        nr_poz.close()
         
 
               
