@@ -62,12 +62,12 @@ def setup_blender(width, height, focal_length, output_dir):
 
 if __name__ == '__main__':
 
-    viewspace_path = '/home/alex-pop/Desktop/Doctorat/Program_blender/viewspace_shapenet_33.txt'
+    viewspace_path = '/home/alex-pop/Desktop/Doctorat/Blender_visualization/viewspace_shapenet_33.txt'
 
-    test_predicted_path ='/home/alex-pop/Desktop/Doctorat/Program_blender/Test_viewstate.txt'
+    test_predicted_path ='/home/alex-pop/Desktop/Doctorat/Blender_visualization/Test_viewstate.txt'
 
     
-    output_dir = '/home/alex-pop/Desktop/Doctorat/Program_blender/'
+    output_dir = '/home/alex-pop/Desktop/Doctorat/Blender_visualization/'
 
 
     data_type = 'test'
@@ -86,10 +86,10 @@ if __name__ == '__main__':
     viewspace = np.loadtxt(viewspace_path)
     test_viewstate=np.loadtxt(test_predicted_path)
 
-    viewspace_start_filepath='/home/alex-pop/Desktop/Doctorat/Program_blender/Viewspace_start.txt'
-    nr_pozitie_filepath='/home/alex-pop/Desktop/Doctorat/Program_blender/nr_pozitie.txt'
-    tip_view_path='/home/alex-pop/Desktop/Doctorat/Program_blender/tip_view.txt'
-    model_view_path='/home/alex-pop/Desktop/Doctorat/Program_blender/Test_viewstate_model.txt'
+    viewspace_start_filepath='/home/alex-pop/Desktop/Doctorat/Blender_visualization/Viewspace_start.txt'
+    nr_pozitie_filepath='/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt'
+    tip_view_path='/home/alex-pop/Desktop/Doctorat/Blender_visualization/tip_view.txt'
+    model_view_path='/home/alex-pop/Desktop/Doctorat/Blender_visualization/Test_viewstate_model.txt'
 
     viewsapace_start=np.loadtxt(viewspace_start_filepath)
     nr_pozitie=np.loadtxt(nr_pozitie_filepath)
@@ -105,12 +105,12 @@ if __name__ == '__main__':
     os.makedirs(exr_dir, exist_ok=True)
     os.makedirs(pose_dir, exist_ok=True)   
 
-    t_view=open('/home/alex-pop/Desktop/Doctorat/Program_blender/tip_view.txt', 'w+')
+    t_view=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/tip_view.txt', 'w+')
 
     if(int(viewsapace_start)==0):
         print('restart')
-        vs_start=open('/home/alex-pop/Desktop/Doctorat/Program_blender/Viewspace_start.txt', 'w+')
-        nr_poz=open('/home/alex-pop/Desktop/Doctorat/Program_blender/nr_pozitie.txt', 'w+')
+        vs_start=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/Viewspace_start.txt', 'w+')
+        nr_poz=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt', 'w+')
         vs_start.write("1")
         vs_start.close()
         nr_poz.write('0')
@@ -163,7 +163,7 @@ if __name__ == '__main__':
                     intrinsics = np.array([[focal, 0, width / 2], [0, focal, height / 2], [0, 0, 1]])
 
                     bpy.context.object.scan_type='kinect'
-                    bpy.context.object.save_scan=False
+                    bpy.context.object.save_scan=True
 
                     np.savetxt(os.path.join(output_dir, 'intrinsics.txt'), intrinsics, '%f')
 
@@ -202,7 +202,7 @@ if __name__ == '__main__':
             print('Nr:'+str(i)+" Initial position nr:"+str(pozitie_actuala))
         else:
 
-            nr_poz=open('/home/alex-pop/Desktop/Doctorat/Program_blender/nr_pozitie.txt', 'w+')
+            nr_poz=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt', 'w+')
 
             pozitie_prezisa=int(test_viewstate[i][1])    
             cam_pose = mathutils.Vector((viewspace[pozitie_prezisa][0], viewspace[pozitie_prezisa][1], viewspace[pozitie_prezisa][2])) 
