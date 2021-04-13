@@ -142,8 +142,8 @@ if __name__ == '__main__':
         # else:
         #     past_model=model_id_list[i-1]
 
-        if (i%15==0) and (past_model!='no model'):
-            past_model='no model'
+        # if (i%15==0) and (past_model!='no model'):
+        #     past_model='no model'
 
         working_model=model_id_list[i]
         print(model_id_list[i])

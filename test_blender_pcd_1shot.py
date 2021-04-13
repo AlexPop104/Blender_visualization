@@ -315,7 +315,7 @@ if __name__ == '__main__':
         open3d.io.write_point_cloud(os.path.join(pcd_dir,str(i)+"_"+"predicted"+".pcd"), pcd)
 
 
-        pozitie_greedy=int(test_viewstate[i][1])    
+        pozitie_greedy=int(test_viewstate[i][2])    
         cam_pose = mathutils.Vector((viewspace[pozitie_greedy][0], viewspace[pozitie_greedy][1], viewspace[pozitie_greedy][2])) 
         center_pose = mathutils.Vector((0, 0, 0))
         direct = center_pose - cam_pose
@@ -349,8 +349,15 @@ if __name__ == '__main__':
 
         nr_poz=open('/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt', 'w+')
         i=i+1
+        print("New position:"+str(i))
         nr_poz.write(str(i))
         nr_poz.close()
+
+
+        if(pozitie_greedy!=pozitie_prezisa):
+            nosame_dir = os.path.join(pcd_dir,'not_same')
+            os.makedirs(nosame_dir, exist_ok=True)
+       
 
         past_model=working_model
 
