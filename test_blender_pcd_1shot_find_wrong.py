@@ -94,13 +94,15 @@ if __name__ == '__main__':
 
     viewspace_path = '/home/alex-pop/Desktop/Doctorat/Blender_visualization/viewspace_shapenet_33.txt'
 
-    test_viewstate_nochange_path ='/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange_122/Test_viewstate_nochange.txt'
-    test_viewstate_permut_path ='/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange_122/Test_viewstate_permuted.txt'
+    test_viewstate_nochange_path ='/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange/Test_viewstate_nochange.txt'
+    test_viewstate_permut_path ='/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange/Test_viewstate_permuted.txt'
 
     
     output_dir = '/home/alex-pop/Desktop/Doctorat/Blender_visualization'
 
     nr_views=16
+
+    
 
 
     data_type = 'test'
@@ -131,7 +133,7 @@ if __name__ == '__main__':
     viewspace_start_filepath='/home/alex-pop/Desktop/Doctorat/Blender_visualization/Viewspace_start.txt'
     nr_pozitie_filepath='/home/alex-pop/Desktop/Doctorat/Blender_visualization/nr_pozitie.txt'
     tip_view_path='/home/alex-pop/Desktop/Doctorat/Blender_visualization/tip_view.txt'
-    model_view_path='/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange_122/Test_viewstate_model_permuted.txt'
+    model_view_path='/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange/Test_viewstate_model_permuted.txt'
 
     viewsapace_start=np.loadtxt(viewspace_start_filepath)
     nr_pozitie=np.loadtxt(nr_pozitie_filepath)
@@ -146,7 +148,10 @@ if __name__ == '__main__':
     bpy.data.objects['Camera'].select=False
     bpy.data.objects['Camera'].select=True
 
-   
+    problem_views_path="/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange/Problem_views.txt"
+    problem_views=np.loadtxt(problem_views_path)
+
+    length_problem_views=int(np.size(problem_views))
     
     
     if(int(viewsapace_start)==0):
@@ -171,7 +176,7 @@ if __name__ == '__main__':
     else:
         j=int(nr_pozitie)
 
-        if(j<12):
+        if(j<length_problem_views):
             if(j//3==0):
                 operation_type="Differences_permut_bad"  
                 print(operation_type) 
@@ -186,8 +191,7 @@ if __name__ == '__main__':
                 print(operation_type)  
 
 
-            problem_views_path="/home/alex-pop/Desktop/Doctorat/Blender_visualization/FIles/Permuted_vs_nochange_122/Problem_views.txt"
-            problem_views=np.loadtxt(problem_views_path)
+            
 
             problem_views2=problem_views[:,0].astype(int)
 

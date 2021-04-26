@@ -100,7 +100,7 @@ if __name__ == '__main__':
     output_dir = '/home/alex-pop/Desktop/Doctorat/Blender_visualization'
 
 
-    data_type = 'test'
+    data_type = 'test_1_class'
     class_list_path = '/home/alex-pop/Desktop/Doctorat/Backups/Trial_Test_Valid_mat/Train_Test/' + data_type + '/_class.txt'
     ShapeNetv1_dir = '/home/alex-pop/Desktop/Doctorat/Backups/Trial_Test_Valid_mat/Train_Test/'
     with open(os.path.join(class_list_path)) as file:
